@@ -1,0 +1,32 @@
+if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(AddFans.this, Manifest.permission.WRITE_CONTACTS)) {
+                    //有权限 用intent启动拨打电话
+                    if(choiceDataList.size() == 0) {
+                        Toast.makeText(ctx, "请选择添加的人", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    //Toast.makeText(ctx, ""+choiceDataList.size(), Toast.LENGTH_SHORT).show();
+                    try {
+                        //首先判断是否还有加的名额
+                        showProgressDialog();
+                        getFriendUserCount(choiceDataList.size());
+                    } catch (Exception e) {
+                        Log.e("addfans add",""+e.getMessage());
+                        cancelProgressDialog();
+                    }
+                } else {
+                    //没有权限
+                    Toast.makeText(ctx, "请设置联系人权限", Toast.LENGTH_SHORT).show();
+                    // Should we show an explanation?
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(AddFans.this,
+                            Manifest.permission.WRITE_CONTACTS)) {
+
+                    } else {
+
+                        ActivityCompat.requestPermissions(AddFans.this,
+                                new String[]{Manifest.permission.WRITE_CONTACTS},
+                                10);
+                    }
+                }
+
+
+                用户主动发送短信到SP或接收手机来获取
